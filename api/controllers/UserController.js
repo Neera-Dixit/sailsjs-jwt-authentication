@@ -24,6 +24,7 @@ module.exports = {
         user: user,
         token: JwtService.issue({id: user.id})
       }
+      res.cookie('OAuth-token', responseData.token);
       return ResponseService.json(200, res, "User created successfully", responseData)
     }).catch(function (error) {
         if (error.invalidAttributes){
@@ -32,5 +33,13 @@ module.exports = {
       }
     )
 
+  },
+
+  renderLoginPage: function (req, res) {
+    res.view('login', {layout: 'login'});
+  },
+
+  registerRegisterPage: function (req, res) {
+    res.view('register', {layout: 'register'});
   }
 };

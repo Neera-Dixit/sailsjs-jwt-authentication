@@ -4,6 +4,8 @@ module.exports = {
     var email = req.param('email');
     var password = req.param('password');
 
+    console.log(req.param);
+
     verifyParams(res, email, password)
 
     User.findOne({email: email}).then(function (user) {
@@ -29,6 +31,7 @@ function signInUser(req, res, password, user) {
           user: user,
           token: generateToken(user.id)
         }
+        res.cookie('OAuth-token', responseData.token);
         return ResponseService.json(200, res, "Successfully signed in", responseData)
       }
     }
